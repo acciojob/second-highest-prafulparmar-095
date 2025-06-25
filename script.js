@@ -1,17 +1,43 @@
 function secondHighest(arr) {
-  if (arr.length < 2) return -Infinity;
+            
+            const uniqueSortedArr = [...new Set(arr)].sort((a, b) => a - b);
 
-  let first = -Infinity;
-  let second = -Infinity;
+           
+            if (uniqueSortedArr.length < 2) {
+                return -Infinity;
+            }
 
-  for (let num of arr) {
-    if (num > first) {
-      second = first;
-      first = num;
-    } else if (num > second && num < first) {
-      second = num;
-    }
-  }
+           
+            return uniqueSortedArr[uniqueSortedArr.length - 2];
+        }
 
-  return second === -Infinity ? -Infinity : second;
-}
+        
+        function findSecondHighest() {
+            const arrayInput = document.getElementById('arrayInput');
+            const resultDisplay = document.getElementById('result');
+            const errorMessageDisplay = document.getElementById('errorMessage');
+
+           
+            resultDisplay.textContent = '';
+            errorMessageDisplay.textContent = '';
+
+            const inputString = arrayInput.value.trim();
+
+            if (!inputString) {
+                errorMessageDisplay.textContent = 'Please enter numbers.';
+                resultDisplay.textContent = ''; // Clear result if input is empty
+                return;
+            }
+
+           
+            const arr = inputString.split(',').map(numStr => parseFloat(numStr.trim())).filter(num => !isNaN(num));
+
+            
+            if (arr.length === 0) {
+                errorMessageDisplay.textContent = 'No valid numbers found. Please enter comma-separated numbers.';
+                resultDisplay.textContent = '';
+                return;
+            }
+
+            const result = secondHighest(arr);
+            resultDisplay.textContent = `Second Highest: ${result}`;
